@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@source "./popup.html";
+@source "./main.js";
+@source "./**/*.vue";
+
+@variant dark (&:where(.dark, .dark *));
+
+@layer components {
+  .icon-btn {
+    @apply flex items-center justify-center w-8 h-8 p-0 bg-transparent border-0 rounded-md cursor-pointer text-gray-700 dark:text-gray-300 transition-colors duration-150;
+  }
+
+  .icon-btn:hover:not(:disabled) {
+    @apply bg-gray-100 dark:bg-gray-700 text-black dark:text-white;
+  }
+
+  .icon-btn:disabled,
+  .icon-btn.loading {
+    @apply opacity-45 cursor-not-allowed pointer-events-none;
+  }
+
+  .status {
+    @apply my-2 text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  .status.error {
+    @apply text-red-600 dark:text-red-400;
+  }
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(6px);
+}

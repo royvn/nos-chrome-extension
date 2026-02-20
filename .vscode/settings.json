@@ -1,0 +1,11 @@
+{
+  "files.readonlyInclude": {
+    "dist/**": true,
+    "dist/*": true
+  },
+  "search.useIgnoreFiles": false,
+  "search.exclude": {
+    "**/node_modules/**": true,
+    "package-lock.json": true
+  }
+}
