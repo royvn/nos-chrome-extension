@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "NOS Nieuws",
+  "version": "1.0",
+  "description": "Toont de laatste NOS-artikelen uit de algemene nieuwsfeed in een popup.",
+  "host_permissions": ["https://feeds.nos.nl/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "NOS Nieuws"
+  }
+}
