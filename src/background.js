@@ -1,7 +1,7 @@
 import { DEFAULT_FEED_URL, STORAGE_KEY_LAST_SEEN, STORAGE_KEY_FEED_URL, parseFeed } from "./feed.js";
 
 const BADGE_CHECK_MINUTES = 1;
-const MAX_BADGE = 9;
+const MAX_BADGE = 10;
 
 function countNewLinks(currentLinks, lastSeen) {
   const seen = new Set(lastSeen || []);
@@ -26,7 +26,7 @@ async function checkFeedAndUpdateBadge() {
     const newCount = countNewLinks(currentLinks, lastSeen);
 
     if (newCount > 0) {
-      const badgeText = String(Math.min(newCount, MAX_BADGE));
+      const badgeText = newCount > MAX_BADGE ? "10+" : String(newCount);
       await chrome.action.setBadgeText({ text: badgeText });
       await chrome.action.setBadgeBackgroundColor({ color: "#c00" });
     }

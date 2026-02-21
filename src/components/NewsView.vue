@@ -1,5 +1,5 @@
 <script setup>
-import ArticleItem from "../components/ArticleItem.vue";
+import ArticleItem from "./ArticleItem.vue";
 
 defineProps({
   articles: {
@@ -43,7 +43,7 @@ defineEmits(["refresh", "open-settings", "toggle-dark"]);
         <button
           type="button"
           :disabled="loading"
-          :class="['icon-btn', { loading }]"
+          class="flex items-center justify-center w-8 h-8 p-0 bg-transparent border-0 rounded-md cursor-pointer text-gray-700 dark:text-gray-300 transition-colors duration-150 hover:bg-gray-100 hover:dark:bg-gray-700 hover:text-black hover:dark:text-white disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none"
           title="Feed vernieuwen"
           aria-label="Feed vernieuwen"
           :aria-busy="loading"
@@ -72,7 +72,7 @@ defineEmits(["refresh", "open-settings", "toggle-dark"]);
         <!-- Dark mode toggle -->
         <button
           type="button"
-          class="icon-btn"
+          class="flex items-center justify-center w-8 h-8 p-0 bg-transparent border-0 rounded-md cursor-pointer text-gray-700 dark:text-gray-300 transition-colors duration-150 hover:bg-gray-100 hover:dark:bg-gray-700 hover:text-black hover:dark:text-white disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none"
           :title="isDark ? 'Lichte modus' : 'Donkere modus'"
           :aria-label="
             isDark ? 'Schakel naar lichte modus' : 'Schakel naar donkere modus'
@@ -124,7 +124,7 @@ defineEmits(["refresh", "open-settings", "toggle-dark"]);
         <!-- Settings -->
         <button
           type="button"
-          class="icon-btn"
+          class="flex items-center justify-center w-8 h-8 p-0 bg-transparent border-0 rounded-md cursor-pointer text-gray-700 dark:text-gray-300 transition-colors duration-150 hover:bg-gray-100 hover:dark:bg-gray-700 hover:text-black hover:dark:text-white disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none"
           title="Instellingen"
           aria-label="Instellingen"
           @click="$emit('open-settings')"

@@ -26,6 +26,10 @@ export default [
         targets: [
           { src: "src/popup.html", dest: "dist" },
           { src: "src/manifest.json", dest: "dist" },
+          { src: "src/images/icon16.png", dest: "dist" },
+          { src: "src/images/icon32.png", dest: "dist" },
+          { src: "src/images/icon48.png", dest: "dist" },
+          { src: "src/images/icon128.png", dest: "dist" },
         ],
       }),
     ],

@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "NOS Nieuws",
+  "name": "NOS.nl",
   "version": "1.0",
-  "description": "Toont de laatste NOS-artikelen uit de algemene nieuwsfeed in een popup.",
+  "description": "Toont de laatste NOS-artikelen uit de feed naar keuze in een popup.",
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
   "host_permissions": ["https://feeds.nos.nl/*"],
   "permissions": ["alarms", "storage"],
   "background": {
@@ -10,6 +16,6 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "NOS Nieuws"
+    "default_title": "NOS.nl"
   }
 }

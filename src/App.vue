@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import NewsView from "./views/NewsView.vue";
-import SettingsView from "./views/SettingsView.vue";
+import NewsView from "./components/NewsView.vue";
+import SettingsView from "./components/SettingsView.vue";
 import {
   FEEDS,
   DEFAULT_FEED_URL,

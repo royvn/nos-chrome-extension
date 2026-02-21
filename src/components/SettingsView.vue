@@ -43,7 +43,7 @@ function onMaxItemsChange(value) {
     >
       <button
         type="button"
-        class="icon-btn"
+        class="flex items-center justify-center w-8 h-8 p-0 bg-transparent border-0 rounded-md cursor-pointer text-gray-700 dark:text-gray-300 transition-colors duration-150 hover:bg-gray-100 hover:dark:bg-gray-700 hover:text-black hover:dark:text-white disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none"
         title="Terug"
         aria-label="Terug naar nieuws"
         @click="$emit('back')"
@@ -104,7 +104,7 @@ function onMaxItemsChange(value) {
             id="max-items"
             type="range"
             min="1"
-            max="10"
+            max="20"
             step="1"
             class="flex-1 accent-gray-800"
             :value="maxItems"
