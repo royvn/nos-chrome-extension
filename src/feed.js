@@ -23,6 +23,30 @@ export const FEEDS = [
 export const DEFAULT_FEED_URL = FEEDS[0].url;
 
 /**
+ * Lightweight RSS link extraction without DOMParser (for use in service workers).
+ * @param {string} xmlString
+ * @param {number} maxItems
+ * @returns {string[]}
+ */
+export function parseFeedLinksOnly(xmlString, maxItems) {
+  const links = [];
+  const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
+  let m;
+  while ((m = itemRegex.exec(xmlString)) !== null && links.length < maxItems) {
+    const block = m[1];
+    const linkMatch =
+      block.match(/<link[^>]*>([^<]+)</) ||
+      block.match(/<link\s+href=["']([^"']+)["']/) ||
+      block.match(/<guid[^>]*>([^<]+)</);
+    if (linkMatch) {
+      const url = linkMatch[1].trim();
+      if (url) links.push(url);
+    }
+  }
+  return links;
+}
+
+/**
  * @param {string} xmlString
  * @param {number} maxItems
  * @returns {{ title: string, link: string, imageUrl: string, pubDate: string }[]}

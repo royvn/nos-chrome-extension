@@ -1,4 +1,12 @@
-import { DEFAULT_FEED_URL, STORAGE_KEY_LAST_SEEN, STORAGE_KEY_FEED_URL, parseFeed } from "./feed.js";
+import {
+  DEFAULT_FEED_URL,
+  STORAGE_KEY_LAST_SEEN,
+  STORAGE_KEY_FEED_URL,
+  STORAGE_KEY_MAX_ITEMS,
+  parseFeedLinksOnly,
+} from "./feed.js";
+
+const DEFAULT_MAX_ITEMS_BADGE = 6;
 
 const BADGE_CHECK_MINUTES = 1;
 const MAX_BADGE = 10;
@@ -10,12 +18,17 @@ function countNewLinks(currentLinks, lastSeen) {
 
 async function checkFeedAndUpdateBadge() {
   try {
-    const { [STORAGE_KEY_FEED_URL]: storedUrl } = await chrome.storage.local.get(STORAGE_KEY_FEED_URL);
+    const { [STORAGE_KEY_FEED_URL]: storedUrl, [STORAGE_KEY_MAX_ITEMS]: maxItemsStored } =
+      await chrome.storage.local.get([STORAGE_KEY_FEED_URL, STORAGE_KEY_MAX_ITEMS]);
     const feedUrl = storedUrl || DEFAULT_FEED_URL;
+    const maxItems =
+      typeof maxItemsStored === "number" && maxItemsStored > 0
+        ? maxItemsStored
+        : DEFAULT_MAX_ITEMS_BADGE;
     const response = await fetch(feedUrl);
     if (!response.ok) return;
     const xml = await response.text();
-    const currentLinks = parseFeed(xml, 6).map((item) => item.link).filter(Boolean);
+    const currentLinks = parseFeedLinksOnly(xml, maxItems).filter(Boolean);
     if (!currentLinks.length) return;
 
     const { [STORAGE_KEY_LAST_SEEN]: lastSeen } = await chrome.storage.local.get(STORAGE_KEY_LAST_SEEN);
@@ -30,8 +43,8 @@ async function checkFeedAndUpdateBadge() {
       await chrome.action.setBadgeText({ text: badgeText });
       await chrome.action.setBadgeBackgroundColor({ color: "#c00" });
     }
-  } catch {
-    // Negeer netwerkfouten bij achtergrondcheck
+  } catch (err) {
+    console.error("[NOS] Badge check mislukt:", err);
   }
 }
 
