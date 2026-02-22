@@ -1,8 +1,8 @@
-# NOS
+# NOS Chrome Extension
 
-A Chrome extension that shows the latest NOS (Dutch news) articles from the general news feed in a popup.
+An unofficial Chrome extension that displays NOS (Dutch public broadcaster) RSS feeds in a browser popup.
 
-**Note:** This is an unofficial extension, built for AI testing purposes. It is not affiliated with or endorsed by NOS.
+> **Note:** This is an unofficial extension not affiliated with or endorsed by NOS.
 
 ## Screenshots
 
@@ -12,24 +12,33 @@ A Chrome extension that shows the latest NOS (Dutch news) articles from the gene
 
 ## Features
 
-- View recent NOS articles in the extension popup
-- Fetches content from the NOS RSS feed
-- Settings view for preferences
-- Styled with Tailwind CSS
+- Browse recent articles from 15 NOS news and sport categories
+- Choose your feed from the settings view (Nieuws & Sport)
+- Configure how many articles to display (1–20)
+- Dark mode toggle, persisted across sessions
+- Badge on the extension icon showing unread article count (checked every minute)
+
+## Feeds
+
+**Nieuws:** Algemeen, Binnenland, Buitenland, Politiek, Economie, Opmerkelijk, Koningshuis, Cultuur & media, Tech
+
+**Sport:** Algemeen, Voetbal, Wielrennen, Schaatsen, Tennis, Formule 1
 
 ## Tech stack
 
-- **Vue 3** – popup UI
-- **Rollup** – build
-- **Tailwind CSS 4** – styling
-- **Manifest V3** – Chrome extension format
+| Tool | Version | Role |
+|------|---------|------|
+| Vue 3 | ^3.5 | Popup UI (Composition API) |
+| Rollup | ^4 | Module bundler |
+| Tailwind CSS | ^4.2 | Utility-first styling |
+| Manifest V3 | — | Chrome extension format |
 
 ## Development
 
 ### Prerequisites
 
 - Node.js
-- pnpm (or npm/yarn)
+- pnpm (recommended) or npm
 
 ### Install
 
@@ -43,7 +52,7 @@ pnpm install
 pnpm build
 ```
 
-Output is written to the `dist/` folder.
+Output is written to `dist/`.
 
 ### Watch (development)
 
@@ -51,7 +60,7 @@ Output is written to the `dist/` folder.
 pnpm watch
 ```
 
-Rebuilds on file changes.
+Rebuilds on every file change (Rollup + Tailwind in parallel).
 
 ### Load in Chrome
 
@@ -60,18 +69,32 @@ Rebuilds on file changes.
 3. Click **Load unpacked**
 4. Select the `dist/` folder
 
+After rebuilds, click the refresh icon on the extension card in `chrome://extensions`.
+
 ## Project structure
 
-- `src/` – source (Vue components, manifest, background script, feed logic)
-- `dist/` – built extension (load this in Chrome)
+```
+src/
+├── components/
+│   ├── ArticleItem.vue   # Single article row (thumbnail + title + date)
+│   ├── NewsView.vue      # Main feed view with header bar
+│   └── SettingsView.vue  # Feed selector and max-items slider
+├── App.vue               # Root component; owns all shared state
+├── background.js         # Service worker: periodic badge updates
+├── feed.js               # Feed list, storage constants, RSS parsers
+├── main.js               # Vue app entry point
+├── manifest.json         # Chrome extension manifest
+├── popup.html            # Popup shell HTML
+└── theme.css             # Tailwind CSS v4 input
+```
 
 ## Permissions
 
-The extension uses:
-
-- **Host**: `https://feeds.nos.nl/*` – to fetch the NOS news feed
-- **alarms** – for periodic refresh
-- **storage** – for user settings
+| Permission | Reason |
+|-----------|--------|
+| `https://feeds.nos.nl/*` | Fetch NOS RSS feeds |
+| `alarms` | Periodic background feed checks |
+| `storage` | Persist user preferences and seen-article tracking |
 
 ## License
 
